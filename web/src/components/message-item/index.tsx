@@ -155,32 +155,32 @@ const MessageItem = ({
                 clickDocumentButton={clickDocumentButton}
               ></MarkdownContent>
             </div>
-            {isAssistant && referenceDocumentList.length > 0 && (
-              <List
-                bordered
-                dataSource={referenceDocumentList}
-                renderItem={(item) => {
-                  return (
-                    <List.Item>
-                      <Flex gap={'small'} align="center">
-                        <FileIcon
-                          id={item.doc_id}
-                          name={item.doc_name}
-                        ></FileIcon>
+            {/*{isAssistant && referenceDocumentList.length > 0 && (*/}
+            {/*  <List*/}
+            {/*    bordered*/}
+            {/*    dataSource={referenceDocumentList}*/}
+            {/*    renderItem={(item) => {*/}
+            {/*      return (*/}
+            {/*        <List.Item>*/}
+            {/*          <Flex gap={'small'} align="center">*/}
+            {/*            <FileIcon*/}
+            {/*              id={item.doc_id}*/}
+            {/*              name={item.doc_name}*/}
+            {/*            ></FileIcon>*/}
 
-                        <NewDocumentLink
-                          documentId={item.doc_id}
-                          documentName={item.doc_name}
-                          prefix="document"
-                        >
-                          {item.doc_name}
-                        </NewDocumentLink>
-                      </Flex>
-                    </List.Item>
-                  );
-                }}
-              />
-            )}
+            {/*            <NewDocumentLink*/}
+            {/*              documentId={item.doc_id}*/}
+            {/*              documentName={item.doc_name}*/}
+            {/*              prefix="document"*/}
+            {/*            >*/}
+            {/*              {item.doc_name}*/}
+            {/*            </NewDocumentLink>*/}
+            {/*          </Flex>*/}
+            {/*        </List.Item>*/}
+            {/*      );*/}
+            {/*    }}*/}
+            {/*  />*/}
+            {/*)}*/}
             {isUser && documentList.length > 0 && (
               <List
                 bordered

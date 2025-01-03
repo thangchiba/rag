@@ -5,6 +5,7 @@ import {
   useSendMessageWithSse,
 } from '@/hooks/logic-hooks';
 import { Message } from '@/interfaces/database/chat';
+import { api_host } from '@/utils/api';
 import { message } from 'antd';
 import { get } from 'lodash';
 import trim from 'lodash/trim';
@@ -35,8 +36,9 @@ export const useSendSharedMessage = () => {
     useCreateNextSharedConversation();
   const { handleInputChange, value, setValue } = useHandleMessageInputChange();
   const { send, answer, done } = useSendMessageWithSse(
-    `/api/v1/${from === SharedFrom.Agent ? 'agentbots' : 'chatbots'}/${conversationId}/completions`,
+    `${api_host}/${from === SharedFrom.Agent ? 'agentbots' : 'chatbots'}/${conversationId}/completions`,
   );
+
   const {
     derivedMessages,
     ref,

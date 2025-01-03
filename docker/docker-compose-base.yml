@@ -7,7 +7,8 @@ services:
     volumes:
       - esdata01:/usr/share/elasticsearch/data
     ports:
-      - ${ES_PORT}:9200
+      # ES_PORT=25010 -> map port 9200 trong container ra 25010 trên host
+      - "${ES_PORT}:9200"
     env_file: .env
     environment:
       - node.name=es01
@@ -45,9 +46,10 @@ services:
       - ./infinity_conf.toml:/infinity_conf.toml
     command: ["-f", "/infinity_conf.toml"]
     ports:
-      - ${INFINITY_THRIFT_PORT}:23817
-      - ${INFINITY_HTTP_PORT}:23820
-      - ${INFINITY_PSQL_PORT}:5432
+      # 25012 -> 23817, 25013 -> 23820, 25014 -> 5432
+      - "${INFINITY_THRIFT_PORT}:23817"
+      - "${INFINITY_HTTP_PORT}:23820"
+      - "${INFINITY_PSQL_PORT}:5432"
     env_file: .env
     environment:
       - TZ=${TIMEZONE}
@@ -65,43 +67,43 @@ services:
       retries: 120
     restart: on-failure
 
-
-  mysql:
-    # mysql:5.7 linux/arm64 image is unavailable.
-    image: mysql:8.0.39
-    container_name: ragflow-mysql
-    env_file: .env
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
-      - TZ=${TIMEZONE}
-    command:
-      --max_connections=1000
-      --character-set-server=utf8mb4
-      --collation-server=utf8mb4_unicode_ci
-      --default-authentication-plugin=mysql_native_password
-      --tls_version="TLSv1.2,TLSv1.3"
-      --init-file /data/application/init.sql
-    ports:
-      - ${MYSQL_PORT}:3306
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./init.sql:/data/application/init.sql
-    networks:
-      - ragflow
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-p${MYSQL_PASSWORD}"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
-    restart: on-failure
+  #  mysql:
+  #    image: mysql:8.0.39
+  #    container_name: ragflow-mysql
+  #    env_file: .env
+  #    environment:
+  #      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+  #      - TZ=${TIMEZONE}
+  #    command:
+  #      --max_connections=1000
+  #      --character-set-server=utf8mb4
+  #      --collation-server=utf8mb4_unicode_ci
+  #      --default-authentication-plugin=mysql_native_password
+  #      --tls_version="TLSv1.2,TLSv1.3"
+  #      --init-file /data/application/init.sql
+  #    ports:
+  #      # 25015 -> 3306
+  #      - "${MYSQL_PORT}:3306"
+  #    volumes:
+  #      - mysql_data:/var/lib/mysql
+  #      - ./init.sql:/data/application/init.sql
+  #    networks:
+  #      - ragflow
+  #    healthcheck:
+  #      test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-p${MYSQL_PASSWORD}"]
+  #      interval: 10s
+  #      timeout: 10s
+  #      retries: 3
+  #    restart: on-failure
 
   minio:
     image: quay.io/minio/minio:RELEASE.2023-12-20T01-00-02Z
     container_name: ragflow-minio
     command: server --console-address ":9001" /data
     ports:
-      - ${MINIO_PORT}:9000
-      - ${MINIO_CONSOLE_PORT}:9001
+      # 25016 -> 9000, 25017 -> 9001
+      - "${MINIO_PORT}:9000"
+      - "${MINIO_CONSOLE_PORT}:9001"
     env_file: .env
     environment:
       - MINIO_ROOT_USER=${MINIO_USER}
@@ -119,14 +121,13 @@ services:
     command: redis-server --requirepass ${REDIS_PASSWORD} --maxmemory 128mb --maxmemory-policy allkeys-lru
     env_file: .env
     ports:
-      - ${REDIS_PORT}:6379
+      # 25018 -> 6379
+      - "${REDIS_PORT}:6379"
     volumes:
       - redis_data:/data
     networks:
       - ragflow
     restart: on-failure
-
-
 
 volumes:
   esdata01:
