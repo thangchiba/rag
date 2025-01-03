@@ -38,7 +38,7 @@ export default {
     login: {
       login: 'Sign in',
       signUp: 'Sign up',
-      loginDescription: 'We’re so excited to see you again!',
+      loginDescription: 'Welcome back!',
       registerDescription: 'Glad to have you on board!',
       emailLabel: 'Email',
       emailPlaceholder: 'Please input email',

@@ -1,3 +1,8 @@
+// const serverAddress =
+//   process.env.NEXT_PUBLIC_SERVER_ADDRESS || 'http://api.thangchiba.com:25020';
+//
+// let api_host = `${serverAddress}/v1`;
+
 let api_host = `/v1`;
 
 export { api_host };
