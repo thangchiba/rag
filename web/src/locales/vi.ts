@@ -34,8 +34,8 @@ export default {
       pleaseInput: 'Vui lòng nhập',
       submit: 'Gửi',
       vietnamese: 'Tiếng  việt',
+      japanese: 'Tiếng  Nhật',
       spanish: 'Tiếng Tây Ban Nha',
-      japanese: 'Tiếng Nhật',
       embedIntoSite: 'Nhúng vào trang web',
     },
     login: {

@@ -147,13 +147,17 @@ const MessageInput = ({
 
   const isUploadingFile = fileList.some((x) => x.status === 'uploading');
 
-  const handlePressEnter = useCallback(async () => {
-    if (isUploadingFile) return;
-    const ids = getFileIds(fileList.filter((x) => isUploadSuccess(x)));
+  const handlePressEnter = useCallback(
+    async (e) => {
+      if (e.nativeEvent.isComposing) return;
+      if (isUploadingFile) return;
+      const ids = getFileIds(fileList.filter((x) => isUploadSuccess(x)));
 
-    onPressEnter(ids);
-    setFileList([]);
-  }, [fileList, onPressEnter, isUploadingFile]);
+      onPressEnter(ids);
+      setFileList([]);
+    },
+    [fileList, onPressEnter, isUploadingFile],
+  );
 
   const handleRemove = useCallback(
     async (file: UploadFile) => {
@@ -207,6 +211,12 @@ const MessageInput = ({
         placeholder={t('sendPlaceholder')}
         value={value}
         disabled={disabled}
+        onCompositionStart={(e) => {
+          console.log('Start composition');
+        }}
+        onCompositionEnd={(e) => {
+          console.log('end composition');
+        }}
         className={classNames({ [styles.inputWrapper]: fileList.length === 0 })}
         suffix={
           <Space>
